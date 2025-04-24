@@ -2,7 +2,8 @@ package co.edu.umanizales.myfirstapi.service;
 
 import co.edu.umanizales.myfirstapi.model.Location;
 import co.edu.umanizales.myfirstapi.model.State;
-
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
 import jakarta.annotation.PostConstruct;
@@ -16,16 +17,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
-import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvValidationException;
-
 
 @Service
 @Getter
 
 public class LocationService {
 
-    @Getter
+
     private List<Location> locations;
     private List<State> states;
 
@@ -39,7 +37,7 @@ public class LocationService {
 
         Path pathFile = Paths.get(ClassLoader.getSystemResource(locationsFilename).toURI());
 
-        try (com.opencsv.CSVReader csvReader = new com.opencsv.CSVReader(new FileReader(pathFile.toString()))) {
+        try (CSVReader csvReader = new CSVReader(new FileReader(pathFile.toString()))) {
             String[] line;
             csvReader.skip(1);
             // Leer todas las filas del CSV
@@ -121,5 +119,4 @@ public class LocationService {
     }
 
 
-}
 }

@@ -106,6 +106,7 @@ public class LocationService {
     }
 
     public List<State> getByStates() {
+
         return states;
     }
 
@@ -118,5 +119,29 @@ public class LocationService {
         return null;
     }
 
+    public List<String> getDepartmentsWithCapitals() {
+        Map<String, String> departments = new HashMap<>();
+        Map<String, String> capitals = new HashMap<>();
+
+        for (Location location : locations) {
+
+            departments.put(location.getCode_state(), location.getState_name());
+
+
+            if (location.getCode().endsWith("001")) {
+                capitals.put(location.getCode_state(), location.getCode() + " " + location.getDescription());
+            }
+        }
+
+        List<String> result = new ArrayList<>();
+        for (String code : departments.keySet()) {
+            result.add(code + " " + departments.get(code));
+            if (capitals.containsKey(code)) {
+                result.add(capitals.get(code));
+            }
+        }
+
+        return result;
+    }
 
 }
